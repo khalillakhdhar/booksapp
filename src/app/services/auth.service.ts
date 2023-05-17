@@ -8,7 +8,6 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,7 +15,6 @@ export class AuthService {
   userData: any; // Save logged in user data
   user=new User();
   constructor(
-    private userService:UserService,
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
@@ -46,16 +44,10 @@ export class AuthService {
           if (user) {
             this.userData = user;
             let myuser;
-            this.userService.getOne(this.userData.email).subscribe((data:any)=>{
-              myuser=data;
-              localStorage.setItem('cuser', JSON.stringify(myuser));
 
-              console.log(myuser);
-                this.router.navigate(['Accueil']);
-              });
            // localStorage.setItem('cuser', JSON.stringify(myuser));
            console.log(myuser);
-            this.router.navigate(['Accueil']);
+            this.router.navigate(['../dashboard']);
           }
         });
       })
